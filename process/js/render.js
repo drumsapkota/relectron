@@ -3,40 +3,27 @@ var ReactDOM = require('react-dom');
 var $ = jQuery = require('jquery');
 var bootstrap = require('bootstrap');
 
-class Timer extends React.Component {
+var fs = eRequire('fs');
+var loadData = JSON.parse(fs.readFileSync(dataLocation));
+
+
+class HelloMessage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {secondsElapsed: 0};
+    this.state = {mydata: loadData};
   }
 
-  tick() {
-    this.setState((prevState) => ({
-      secondsElapsed: prevState.secondsElapsed + 1
-    }));
-  }
-
-  componentDidMount() {
-    this.interval = setInterval(() => this.tick(), 1000);
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.interval);
-  }
-
+  
   render() {
+  	var alldata = this.state.mydata;
     return (
-      <div>Seconds Elapsed: {this.state.secondsElapsed}</div>
+      <div>
+        <h1>Hello, world!</h1>
+        <span>{alldata[1].STU_ID}</span>
+      </div>
     );
   }
 }
 
-class HelloMessage extends React.Component {
-  render() {
-    return (<div>Hello Electron with {this.props.name}...
-    	<Timer />
-    </div>);
-  }
-}
-
-ReactDOM.render(<HelloMessage name="React" />, document.getElementById('root'));
+ReactDOM.render(<HelloMessage />, document.getElementById('root'));
 
